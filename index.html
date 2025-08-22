@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>RDL Telemetry Map Replay</title>
+  <style>
+    html, body { margin:0; height:100%; background:#0b0f14; }
+    #app { width:100%; height:100%; }
+    .hud, .panel {
+      position:absolute; background:rgba(0,0,0,0.55); color:#fff;
+      padding:10px 12px; border-radius:10px; font-family:system-ui, Arial; font-size:13px;
+      backdrop-filter: blur(6px);
+    }
+    .hud { top:12px; left:12px; }
+    .panel { bottom:12px; right:12px; }
+    .row { display:flex; align-items:center; gap:8px; margin-top:6px; }
+    .label { color:#ccc; min-width:90px; }
+    input[type="range"] { width:260px; }
+    button, select {
+      background:#1f2733; color:#fff; border:1px solid #364355; padding:6px 10px;
+      border-radius:8px; cursor:pointer;
+    }
+    .badge { display:inline-block; padding:2px 6px; border-radius:6px; font-size:12px; background:#2b3442; }
+    .hint { position:absolute; top:12px; right:12px; color:#9fb3c8; font:12px/1.2 system-ui; opacity:0.85; }
+    .hint kbd { background:#0d141c; border:1px solid #2a3848; border-bottom-width:2px; padding:2px 6px; border-radius:6px; }
+  </style>
+
+  <!-- Import map for Three.js modules -->
+  <script type="importmap">
+  { "imports": { "three": "https://unpkg.com/three@0.160.0/build/three.module.js" } }
+  </script>
+</head>
+<body>
+  <div id="app"></div>
+
+  <div class="hud">
+    <div><strong>RDL Map Replay</strong></div>
+    <div class="row"><span class="label">Time</span>  <span id="t" class="badge">0.00 s</span></div>
+    <div class="row"><span class="label">Speed</span> <span id="v" class="badge">0.0 m/s</span></div>
+    <div class="row"><span class="label">Angle</span> <span id="a" class="badge">0.0°</span></div>
+    <div class="row"><span class="label">Accel</span> <span id="x" class="badge">0.0 m/s²</span></div>
+  </div>
+
+  <div class="panel">
+    <div class="row">
+      <button id="playPause">▶ Play</button>
+      <label class="label">Scrub</label>
+      <input id="scrub" type="range" min="0" max="1" value="0" step="0.001" />
+    </div>
+    <div class="row">
+      <label class="label">Rate</label>
+      <select id="rate">
+        <option value="0.5">0.5×</option>
+        <option value="1" selected>1×</option>
+        <option value="1.5">1.5×</option>
+        <option value="2">2×</option>
+        <option value="3">3×</option>
+      </select>
+      <button id="viewToggle">Top view</button>
+    </div>
+  </div>
+
+  <div class="hint">Drag to orbit • Scroll to zoom • Press <kbd>V</kbd> to toggle view</div>
+
+  <script type="module" src="./main.js"></script>
+</body>
+</html>
